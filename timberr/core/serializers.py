@@ -85,8 +85,7 @@ class ClientSerializer(serializers.ModelSerializer):
 
 
 class InvoiceSerializer(serializers.ModelSerializer):
-    client = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
-    created_by = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
+    due_date = serializers.DateField(input_formats=['%Y-%m-%d'])
 
     class Meta:
         model = Invoice
@@ -98,7 +97,8 @@ class InvoiceSerializer(serializers.ModelSerializer):
             "shipping_address",
             "vat",
             "dispatch_personnel",
-            "client"
+            "client",
+            "created_by",
         )
 
         read_only_fields = ("id",)

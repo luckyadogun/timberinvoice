@@ -9,7 +9,7 @@ from django.contrib.auth.hashers import check_password, make_password
 
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework import generics, views, viewsets
-from .models import User, Client
+from .models import User, Client, Invoice
 
 # auth_backend
 from .auth_backend import CustomAuthBackend
@@ -19,7 +19,7 @@ authenticate = CustomAuthBackend.authenticate
 from .pagination import CustomCursorPagination
 
 from .serializers import (RegistrationSerializer, 
-    ClientSerializer, LoginSerializer)
+    ClientSerializer, LoginSerializer, InvoiceSerializer)
 
 import jwt
 import jsend
@@ -110,7 +110,6 @@ class ClientViewset(viewsets.ModelViewSet):
 
     def list(self, request):
         queryset = self.queryset
-        print(len(queryset))
         serializer = self.serializer_class(queryset, many=True)
         return Response(
                 jsend.success({"client": serializer.data}),
@@ -141,5 +140,50 @@ class ClientViewset(viewsets.ModelViewSet):
     def destroy(self, request, *args, **kwargs):
         instance = self.get_object()
         self.perform_destroy(instance)
-        return Response(status=status.HTTP_204_NO_CONTENT)
+        return Response(
+            jsend.success({"client": "Successfully Deleted"}),
+            status=status.HTTP_204_NO_CONTENT)
     
+
+
+class InvoiceViewset(viewsets.ModelViewSet):
+    serializer_class = InvoiceSerializer
+    queryset = Invoice.objects.all()
+    permission_classes = [IsAuthenticated]
+    pagination_class = CustomCursorPagination
+
+    def list(self, request):
+        queryset = self.queryset
+        serializer = self.serializer_class(queryset, many=True)
+        return Response(
+                jsend.success({"invoice": serializer.data}),
+                status=status.HTTP_200_OK)
+
+    def create(self, request, *args, **kwargs):
+        serializer = self.serializer_class(data=request.data)
+        if serializer.is_valid(raise_exception=True):
+            self.perform_create(serializer)
+            return Response(
+                jsend.success({"invoice": serializer.data}), 
+                status=status.HTTP_201_CREATED
+            )
+        else:
+            return Response(
+                jsend.error("INVALID REQUEST"), 
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+    def retrieve(self, request, *args, **kwargs):
+        instance = self.get_object()
+        serializer = self.serializer_class(instance)
+        return Response(
+            jsend.success({"invoice": serializer.data}),
+            status=status.HTTP_200_OK
+        )
+
+    def destroy(self, request, *args, **kwargs):
+        instance = self.get_object()
+        self.perform_destroy(instance)
+        return Response(
+            jsend.success({"invoice": "Successfully Deleted"}),
+            status=status.HTTP_204_NO_CONTENT)

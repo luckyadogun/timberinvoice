@@ -62,9 +62,9 @@ class Invoice(models.Model):
         )
 
     client = models.ForeignKey(Client, on_delete=models.CASCADE)
-    invoice_id = models.CharField(max_length=10, blank=False)
+    invoice_id = models.CharField(max_length=10, blank=False, unique=True)
     date_created = models.DateField(auto_now_add=True)
-    due_date = models.DateField(auto_now_add=True)
+    due_date = models.DateField()
     created_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='invoice')
     payment_term = models.CharField(max_length=200, choices=PAYMENT_TERM, default="End of Month")
     shipping_address = models.TextField(blank=False)

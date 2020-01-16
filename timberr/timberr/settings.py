@@ -72,6 +72,7 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.IsAuthenticatedOrReadOnly',
         'rest_framework.permissions.AllowAny',
     ),
+    'DATE_INPUT_FORMATS': ['iso-8601', '%Y-%m-%d'],
 }
 
 AUTH_USER_MODEL = 'core.User'
