@@ -1,12 +1,23 @@
 version: "3"
 
 services:
-  timberr:
-    build:
-      context: .
-    ports:
-      - "8000:8000"
+  db:
+    image: postgres
+  web:
+    build: .
+    command: sh -c "python manage.py collectstatic --no-input && python manage.py makemigrations && python manage.py migrate && python manage.py runserver 0.0.0.0:9000"
+    environment:
+      - DB_NAME=postgres
+      - DB_USER=postgres
+      - DB_PASS=postgres
+      - DB_HOST=db
+      - DB_PORT=5432
+      - DEBUG=${DEBUG}
+      - SECRET_KEY=${SECRET_KEY}
+      - ALLOWED_HOSTS=${ALLOWED_HOSTS}
     volumes:
       - ./timberr:/timberr
-    command: >
-      sh -c "python manage.py runserver 0.0.0.0:8000"
+    ports:
+      - "9000:9000"
+    depends_on:
+      - db
