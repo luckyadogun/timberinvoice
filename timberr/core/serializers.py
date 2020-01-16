@@ -62,8 +62,6 @@ class LoginSerializer(serializers.Serializer):
         
 
 class ClientSerializer(serializers.ModelSerializer):
-    created_by = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
-
     class Meta:
         model = Client
         fields = (
@@ -86,26 +84,27 @@ class ClientSerializer(serializers.ModelSerializer):
         return Client.objects.create(**validated_data)
 
 
-# class InvoiceSerializer(serializers.ModelSerializer):
-#     client = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
-#     created_by = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
+class InvoiceSerializer(serializers.ModelSerializer):
+    client = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
+    created_by = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
 
-#     class Meta:
-#         model = Invoice
-#         fields = (
-#             "id",
-#             "invoice_id",
-#             "due_date",
-#             "payment_term",
-#             "shipping_address",
-#             "vat",
-#             "dispatch_personnel",
-#         )
+    class Meta:
+        model = Invoice
+        fields = (
+            "id",
+            "invoice_id",
+            "due_date",
+            "payment_term",
+            "shipping_address",
+            "vat",
+            "dispatch_personnel",
+            "client"
+        )
 
-#         read_only_fields = ("id",)
+        read_only_fields = ("id",)
 
-#     def create(self, validated_data):
-#         return Invoice.objects.create(**validated_data)
+    def create(self, validated_data):
+        return Invoice.objects.create(**validated_data)
 
 # class InvoiceUpdateSerializer(serializers.ModelSerializer):
 #     client = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
