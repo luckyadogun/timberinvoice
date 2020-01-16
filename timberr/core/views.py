@@ -187,3 +187,18 @@ class InvoiceViewset(viewsets.ModelViewSet):
         return Response(
             jsend.success({"invoice": "Successfully Deleted"}),
             status=status.HTTP_204_NO_CONTENT)
+
+    def update(self, request, *args, **kwargs):
+        partial = kwargs.pop('partial', False)
+        instance = self.get_object()
+        serializer = self.serializer_class(instance, data=request.data, partial=partial)
+        if serializer.is_valid(raise_exception=True):
+            self.perform_update(serializer)
+
+        if getattr(instance, '_prefetched_objects_cache', None):
+            instance._prefetched_objects_cache = {}
+        
+        return Response(
+            jsend.success({"invoice": "Invoice successfully updated"}),
+            status=status.HTTP_200_OK
+        )
