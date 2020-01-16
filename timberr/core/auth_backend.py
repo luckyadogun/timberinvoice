@@ -1,7 +1,7 @@
 from django.contrib.auth.backends import ModelBackend
 from .models import User
 
-class NewCustomAuthBackend(ModelBackend):
+class CustomAuthBackend(ModelBackend):
     """Logs in user with email and password."""
 
     def authenticate(self, request, email=None, password=None):

@@ -43,7 +43,11 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    'core'
+    'core',
+    
+    # third-party
+    'rest_framework',
+    'rest_framework.authtoken',
 ]
 
 MIDDLEWARE = [
@@ -59,7 +63,7 @@ MIDDLEWARE = [
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         # 'rest_framework.authentication.TokenAuthentication',
-        'users.json_web_token.TokenAuthentication',
+        'core.json_web_token.TokenAuthentication',
         'rest_framework.authentication.SessionAuthentication',
         'rest_framework.authentication.BasicAuthentication',
     ),
@@ -72,6 +76,10 @@ REST_FRAMEWORK = {
 }
 
 AUTH_USER_MODEL = 'core.User'
+AUTHENTICATION_BACKENDS = (
+    # custom auth backend
+    'core.auth_backend.CustomAuthBackend',
+)
 
 ROOT_URLCONF = 'timberr.urls'
 

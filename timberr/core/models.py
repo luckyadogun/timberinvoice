@@ -6,7 +6,7 @@ from django.db import models
 # Create your models here.
 
 class User(AbstractUser):
-
+    username = models.CharField(max_length=200, blank=False, unique=True)
     first_name = models.CharField(max_length=200, blank=False)
     last_name = models.CharField(max_length=200, blank=False)
     password = models.CharField(max_length=200)
@@ -38,7 +38,7 @@ class Client(models.Model):
     telephone = models.CharField(
         validators=[phone_regex], max_length=17, unique=True, blank=True, null=True
     )
-    about = models.TextField(null=True)
+    about = models.TextField(null=True, blank=True)
     address = models.CharField(max_length=200, blank=False)
     city = models.CharField(max_length=200, blank=False)
     state = models.CharField(max_length=200, blank=False)
@@ -68,7 +68,7 @@ class Invoice(models.Model):
     created_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='invoice')
     payment_term = models.CharField(max_length=200, choices=PAYMENT_TERM, default="End of Month")
     shipping_address = models.TextField(blank=False)
-    VAT = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(100)])
+    vat = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(100)])
     dispatch_personnel = models.CharField(max_length=200, blank=False)
 
     def __str__(self):
