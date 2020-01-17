@@ -5,7 +5,9 @@ services:
     image: postgres
   web:
     build: .
-    command: sh -c "python manage.py collectstatic --no-input && python manage.py makemigrations && python manage.py migrate && python manage.py runserver 0.0.0.0:9000"
+    expose:
+      - "8000"
+    command: sh -c "python manage.py collectstatic --no-input && python manage.py makemigrations && python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
     environment:
       - DB_NAME=postgres
       - DB_USER=postgres
@@ -18,6 +20,6 @@ services:
     volumes:
       - ./timberr:/timberr
     ports:
-      - "9000:9000"
+      - "8000:8000"
     depends_on:
       - db

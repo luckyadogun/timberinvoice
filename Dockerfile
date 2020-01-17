@@ -19,4 +19,4 @@ COPY ./timberr /timberr
 RUN adduser -D user
 USER user
 
-EXPOSE "9000"
+EXPOSE "8000"
