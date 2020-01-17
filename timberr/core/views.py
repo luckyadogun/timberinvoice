@@ -4,6 +4,7 @@ from django.conf import settings
 
 from rest_framework.response import Response
 from rest_framework import status
+from rest_framework.decorators import action
 from django.contrib.auth import login, logout
 from django.contrib.auth.hashers import check_password, make_password
 
@@ -109,7 +110,7 @@ class ClientViewset(viewsets.ModelViewSet):
     pagination_class = CustomCursorPagination
 
     def list(self, request):
-        queryset = self.queryset
+        queryset = self.queryset.filter(created_by=request.user)
         serializer = self.serializer_class(queryset, many=True)
         return Response(
                 jsend.success({"client": serializer.data}),
@@ -153,7 +154,7 @@ class InvoiceViewset(viewsets.ModelViewSet):
     pagination_class = CustomCursorPagination
 
     def list(self, request):
-        queryset = self.queryset
+        queryset = self.queryset.filter(created_by=request.user)
         serializer = self.serializer_class(queryset, many=True)
         return Response(
                 jsend.success({"invoice": serializer.data}),
@@ -188,17 +189,17 @@ class InvoiceViewset(viewsets.ModelViewSet):
             jsend.success({"invoice": "Successfully Deleted"}),
             status=status.HTTP_204_NO_CONTENT)
 
-    def update(self, request, *args, **kwargs):
-        partial = kwargs.pop('partial', False)
-        instance = self.get_object()
-        serializer = self.serializer_class(instance, data=request.data, partial=partial)
-        if serializer.is_valid(raise_exception=True):
-            self.perform_update(serializer)
-
-        if getattr(instance, '_prefetched_objects_cache', None):
-            instance._prefetched_objects_cache = {}
-        
-        return Response(
-            jsend.success({"invoice": "Invoice successfully updated"}),
-            status=status.HTTP_200_OK
-        )
+    @action(detail=True, methods=["put"])
+    def update_invoice(self, request, pk=None):
+        if self.queryset.filter(id=pk).exists():
+            self.queryset.filter(id=pk).update(**request.data)
+            inv = self.queryset.get(id=pk)
+            serializer = self.serializer_class(inv)
+            return Response(
+                    jsend.success({"invoice": serializer.data}),
+                    status=status.HTTP_200_OK,
+                )
+        else:
+             return Response(
+                (jsend.error("Invoice not found")), status=status.HTTP_404_NOT_FOUND
+            )

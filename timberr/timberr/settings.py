@@ -81,6 +81,8 @@ AUTHENTICATION_BACKENDS = (
     'core.auth_backend.CustomAuthBackend',
 )
 
+APPEND_SLASH=False
+
 ROOT_URLCONF = 'timberr.urls'
 
 TEMPLATES = [
