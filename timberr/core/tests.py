@@ -16,7 +16,7 @@ class APITest(APITestCase):
             "first_name": "Adams",
             "last_name": "James",
             "password": "somepassword",
-            "company_name": "Bloverse",
+            "company_name": "Me, Inc",
             "office_address": "123, Stan Road",
             "office_telephone": 234816333641
             }
@@ -44,11 +44,11 @@ class APITest(APITestCase):
 
     def test_create_client(self):
         data = {
-            "full_name": "James Tancredi-B",
+            "full_name": "James Tancredi",
             "company_name": "Dev Inc",
             "phone_number": 455123456789,
-            "about": "He is a guy",
-            "address": "A fucking unknown place",
+            "about": "Some words",
+            "address": "An known place",
             "city": "London",
             "state": "London",
             "country": "England",
