@@ -16,10 +16,6 @@ services:
       - DB_USER=postgres
       - DB_PASS=postgres
       - DB_HOST=db
-      - DB_PORT=5432
-      - DEBUG=${DEBUG}
-      - SECRET_KEY=${SECRET_KEY}
-      - ALLOWED_HOSTS=${ALLOWED_HOSTS}
     volumes:
       - ./timberr:/timberr
     env_file:
