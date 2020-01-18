@@ -144,6 +144,14 @@ class ClientViewset(viewsets.ModelViewSet):
         return Response(
             jsend.success({"client": "Successfully Deleted"}),
             status=status.HTTP_204_NO_CONTENT)
+
+    @action(detail=False)
+    def get_total_client(self, request):
+        total_clients = Client.objects.count()
+        return Response(
+                    jsend.success({"client": {"total": total_clients}}),
+                    status=status.HTTP_200_OK,
+                )
     
 
 
@@ -203,3 +211,11 @@ class InvoiceViewset(viewsets.ModelViewSet):
              return Response(
                 (jsend.error("Invoice not found")), status=status.HTTP_404_NOT_FOUND
             )
+
+    @action(detail=False)
+    def get_total_invoice(self, request):
+        total_invoice = Invoice.objects.count()
+        return Response(
+                    jsend.success({"invoice": {"total": total_invoice}}),
+                    status=status.HTTP_200_OK,
+                )
