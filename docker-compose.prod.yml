@@ -7,7 +7,10 @@ services:
     build: .
     expose:
       - "8000"
-    command: sh -c "python manage.py collectstatic --no-input && python manage.py makemigrations && python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
+    command: sh -c "python manage.py collectstatic --no-input && python manage.py makemigrations && python manage.py migrate && gunicorn timberr.wsgi:application --bind 0.0.0.0:8000"
+    volumes:
+      - static_volume:/static
+      - media_volume:/media
     environment:
       - DB_NAME=postgres
       - DB_USER=postgres
@@ -19,9 +22,14 @@ services:
       - ALLOWED_HOSTS=${ALLOWED_HOSTS}
     volumes:
       - ./timberr:/timberr
-    ports:
-      - "8000:8000"
     env_file:
-      - ./.env.dev
+      - ./.env.prod
     depends_on:
       - db
+
+  nginx:
+    build: ./nginx
+    ports:
+      - 1337:80
+    depends_on:
+      - web
