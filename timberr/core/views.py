@@ -143,7 +143,7 @@ class ClientViewset(viewsets.ModelViewSet):
         self.perform_destroy(instance)
         return Response(
             jsend.success({"client": "Successfully Deleted"}),
-            status=status.HTTP_204_NO_CONTENT)
+            status=status.HTTP_200_OK)
 
     @action(detail=False)
     def get_total_client(self, request):
@@ -195,7 +195,7 @@ class InvoiceViewset(viewsets.ModelViewSet):
         self.perform_destroy(instance)
         return Response(
             jsend.success({"invoice": "Successfully Deleted"}),
-            status=status.HTTP_204_NO_CONTENT)
+            status=status.HTTP_200_OK)
 
     @action(detail=True, methods=["put"])
     def update_invoice(self, request, pk=None):

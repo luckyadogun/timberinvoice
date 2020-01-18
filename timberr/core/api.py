@@ -25,15 +25,17 @@ urlpatterns = [
             title="Timberr API", authentication_classes=[], permission_classes=[]
         ),
     ),
+
     path('register/', UserRegistrationAPIView.as_view(), name="register"),
     path('login/', LoginAPIView.as_view(), name="login"),
-    path('client/', list_create_client, name="list-create-client"),
-    path('client/total', total_client, name="total-client"),
 
+    path('client/', list_create_client, name="list-create-client"),
     path('client/<int:pk>/', retrieve_delete_client, name="client-detail"),
+    path('client/total/', total_client, name="total-client"),
+
     path('invoice/', list_create_invoice, name="list-create-invoice"),
     path('invoice/<int:pk>/', retrieve_delete_invoice, name="invoice-detail"),
     path('invoice/<int:pk>/update', update_invoice, name="update-invoice"),
-    path('invoice/total', total_invoice, name="total-invoice"),
+    path('invoice/total/', total_invoice, name="total-invoice"),
 
 ]

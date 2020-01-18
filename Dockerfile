@@ -3,7 +3,6 @@ MAINTAINER Lucky Adogun
 
 ENV PYTHONUNBUFFERED 1
 ENV PYTHONDONTWRITEBYTECODE 1
-ENV DEBUG 0
 
 COPY ./requirements.txt /requirements.txt
 RUN pip install -r /requirements.txt
@@ -22,4 +21,4 @@ USER user
 
 EXPOSE "8000"
 
-CMD gunicorn timberr.wsgi:application --bind 0.0.0.0:$PORT
+# CMD gunicorn timberr.wsgi:application --bind 0.0.0.0:$PORT
