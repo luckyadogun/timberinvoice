@@ -7,19 +7,20 @@ services:
     build: .
     expose:
       - "8000"
-    command: sh -c "python manage.py collectstatic --no-input && python manage.py makemigrations && python manage.py migrate && gunicorn timberr.wsgi:application --bind 0.0.0.0:8000"
-    volumes:
-      - static_volume:/static
-      - media_volume:/media
+    command: sh -c "python manage.py collectstatic --no-input && python manage.py makemigrations && python manage.py migrate && waitress-serve 8000 timberr.wsgi:application"
     environment:
       - DB_NAME=postgres
       - DB_USER=postgres
       - DB_PASS=postgres
       - DB_HOST=db
+      - DB_PORT=5432
+      - DEBUG=${DEBUG}
+      - SECRET_KEY=${SECRET_KEY}
+      - ALLOWED_HOSTS=${ALLOWED_HOSTS}
     volumes:
       - ./timberr:/timberr
-    env_file:
-      - ./.env.prod
+    ports:
+      - "8000:8000"
     depends_on:
       - db
 
