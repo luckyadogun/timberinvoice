@@ -10,4 +10,4 @@ python manage.py migrate
 
 # Start server
 echo "Starting server"
-waitress-serve --port=8000 timberr.wsgi:application
+waitress-serve --port=$PORT timberr.wsgi:application
