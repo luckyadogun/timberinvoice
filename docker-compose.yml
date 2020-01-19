@@ -7,7 +7,7 @@ services:
     build: .
     expose:
       - "8000"
-    command: sh -c "python manage.py collectstatic --no-input && python manage.py makemigrations && python manage.py migrate && gunicorn timberr.wsgi:application --bind 0.0.0.0:8000"
+    command: sh -c "python manage.py collectstatic --no-input && python manage.py makemigrations && python manage.py migrate && waitress-serve --port=8000 timberr.wsgi:application"
     environment:
       - DB_NAME=postgres
       - DB_USER=postgres

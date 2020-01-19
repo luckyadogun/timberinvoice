@@ -12,6 +12,9 @@ RUN apk add --virtual .build-deps gcc python3-dev musl-dev postgresql-dev
 RUN pip install psycopg2
 RUN apk del .build-deps
 
+# copy entrypoint.sh
+COPY ./entrypoint.sh /entrypoint.sh
+
 RUN mkdir /timberr
 WORKDIR /timberr
 COPY ./timberr /timberr
@@ -19,6 +22,5 @@ COPY ./timberr /timberr
 RUN adduser -D user
 USER user
 
-EXPOSE "8000"
-
-CMD ["gunicorn", "--chdir", "timberr", "--bind", ":8000", "timberr.wsgi:application"]
+# run entrypoint.sh
+ENTRYPOINT ["/entrypoint.sh"]
