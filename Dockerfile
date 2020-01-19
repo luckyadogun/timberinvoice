@@ -21,4 +21,4 @@ USER user
 
 EXPOSE "8000"
 
-CMD gunicorn timberr.wsgi:application --bind 0.0.0.0:$PORT
+CMD ["gunicorn", "--chdir", "timberr", "--bind", ":8000", "timberr.wsgi:application"]
