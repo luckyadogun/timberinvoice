@@ -69,7 +69,8 @@ class LoginAPIView(views.APIView):
                                 jsend.success(
                                     {
                                         "token": jwt.encode(payload, settings.SECRET_KEY),
-                                        "user": serializer.data
+                                        "user": serializer.data,
+                                        "user_id": user.id
                                     }
                                 ),
                                 status=status.HTTP_201_CREATED,

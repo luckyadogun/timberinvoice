@@ -13,16 +13,10 @@ class User(AbstractUser):
     email = models.EmailField(max_length=250, unique=True)
     company_name = models.CharField(max_length=200, blank=False)
     office_address = models.CharField(max_length=200, blank=False)
-    phone_regex = RegexValidator(
-        regex=r"^\+?1?\d{9,15}$",
-        message="Phone number must be entered in the format: '+999999999'. Up to 15 digits allowed.",
-    )
-    office_telephone = models.CharField(
-        validators=[phone_regex], max_length=17, unique=True, blank=True, null=True
-    )
+    office_telephone = models.CharField(max_length=200, blank=True, null=True)
 
     def __str__(self):
-        return self.first_name
+        return self.username
 
     class Meta:
         ordering = ("-date_joined",)
@@ -31,13 +25,7 @@ class User(AbstractUser):
 class Client(models.Model):
     full_name = models.CharField(max_length=200, blank=False)
     company_name = models.CharField(max_length=200, blank=False)
-    phone_regex = RegexValidator(
-        regex=r"^\+?1?\d{9,15}$",
-        message="Phone number must be entered in the format: '+999999999'. Up to 15 digits allowed.",
-    )
-    telephone = models.CharField(
-        validators=[phone_regex], max_length=17, unique=True, blank=True, null=True
-    )
+    telephone = models.CharField(max_length=200, blank=True, null=True)
     about = models.TextField(null=True, blank=True)
     address = models.CharField(max_length=200, blank=False)
     city = models.CharField(max_length=200, blank=False)
@@ -45,7 +33,7 @@ class Client(models.Model):
     country = models.CharField(max_length=200, blank=False)
     zipcode = models.CharField(max_length=200, blank=False)
     date_created = models.DateField(auto_now_add=True)
-    created_by = models.ForeignKey(User, on_delete=models.CASCADE)
+    created_by = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
 
     def __str__(self):
         return self.full_name
@@ -65,10 +53,11 @@ class Invoice(models.Model):
     invoice_id = models.CharField(max_length=10, blank=False, unique=True)
     date_created = models.DateField(auto_now_add=True)
     due_date = models.DateField()
-    created_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='invoice')
+    amount = models.CharField(max_length=100, null=True, blank=True)
+    created_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='invoice', null=True)
     payment_term = models.CharField(max_length=200, choices=PAYMENT_TERM, default="End of Month")
     shipping_address = models.TextField(blank=False)
-    vat = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(100)])
+    vat = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(100)], blank=True)
     dispatch_personnel = models.CharField(max_length=200, blank=False)
 
     def __str__(self):

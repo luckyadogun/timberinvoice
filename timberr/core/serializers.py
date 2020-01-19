@@ -75,7 +75,7 @@ class ClientSerializer(serializers.ModelSerializer):
             "state",
             "country",
             "zipcode",
-            "created_by",
+            "created_by"
         )
 
         read_only_fields = ("id", )
@@ -98,7 +98,7 @@ class InvoiceSerializer(serializers.ModelSerializer):
             "vat",
             "dispatch_personnel",
             "client",
-            "created_by",
+            "created_by"
         )
 
         read_only_fields = ("id",)
