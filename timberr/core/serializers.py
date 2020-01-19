@@ -105,35 +105,3 @@ class InvoiceSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         return Invoice.objects.create(**validated_data)
-
-    # def update(self, instance, validated_data):
-    #     instance.client = validated_data.get("client", instance.client)
-    #     instance.invoice_id = validated_data.get("invoice_id", instance.client)
-    #     instance.payment_term = validated_data.get("payment_term", instance.payment_term)
-    #     instance.shipping_address = validated_data.get("shipping_address", instance.shipping_address)
-    #     instance.vat = validated_data.get("vat", instance.vat)
-    #     instance.dispatch_personnel = validated_data.get("dispatch_personnel", instance.dispatch_personnel)
-    #     instance.save()
-
-    #     return instance
-
-# class InvoiceUpdateSerializer(serializers.ModelSerializer):
-#     client = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
-#     created_by = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
-
-#     class Meta:
-#         model = Invoice
-#         fields = "__all__"
-
-#         read_only_fields = ("id",)
-
-#     def update(self, instance, validated_data):
-#         instance.client = validated_data.get("client", instance.client)
-#         instance.invoice_id = validated_data.get("invoice_id", instance.client)
-#         instance.payment_term = validated_data.get("payment_term", instance.payment_term)
-#         instance.shipping_address = validated_data.get("shipping_address", instance.shipping_address)
-#         instance.vat = validated_data.get("vat", instance.vat)
-#         instance.dispatch_personnel = validated_data.get("dispatch_personnel", instance.dispatch_personnel)
-#         instance.save()
-
-#         return instance
