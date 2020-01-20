@@ -14,6 +14,8 @@ Here are the API Endpoints and needed payloads that could be used to create requ
 
 `/api/register/`
 
+
+
 `{
 	"username": "name",
 	"email": "name@mail.com",
@@ -29,6 +31,8 @@ Here are the API Endpoints and needed payloads that could be used to create requ
 
 `/api/login/`
 
+
+
 `{
 	"email": "name@email.com",
 	"password": "yourpasswordhere",
@@ -37,6 +41,8 @@ Here are the API Endpoints and needed payloads that could be used to create requ
 ### Client [POST, GET, DELETE]
 
 `/api/client/`
+
+
 
 `{
 	"company_name": "Dev Inc",
@@ -52,6 +58,8 @@ Here are the API Endpoints and needed payloads that could be used to create requ
 ### Invoice [POST, GET, DELETE, PUT]
 
 `/api/invoice/`
+
+
 
 `{
 	"invoice_id": "1x1887yy",
@@ -70,19 +78,26 @@ This project is for test purposes
 
 Local Installation:
 `-- git clone https://github.com/luckyadogun/timberinvoice.git`
+
 `-- cd timberinvoice`
+
 `-- setup Postgres DB`
+
 `-- run python manage.py migrate`
+
 `-- python manage.py runserver`
 
 Cloud Installation:
 -- install Docker [https://docs.docker.com/get-started/]
+
 `-- docker pull tobore/timberr:latest`
+
 `-- docker run tobore/timberr`
 
 ## Tests
 
 Navigate to the project root and run
+
 `-- python manage.py tests`
 
 ## Contributors
