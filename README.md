@@ -35,7 +35,7 @@ Here are the API Endpoints and needed payloads that could be used to create requ
 
 `{
 	"email": "name@email.com",
-	"password": "yourpasswordhere",
+	"password": "yourpasswordhere"
 }`
 
 ### Client [POST, GET, DELETE]
