@@ -1,7 +1,6 @@
 # timberinvoice
 
-Timberinvoice is a web-based  solution for managing clients and invoices. Here is a demo of the application (running with a Vue.js frontend) - https://friendly-pare-762c4d.netlify.com/
-
+Timberinvoice is a web-based  solution for managing clients and invoices. Here is a demo of the application (running with a Vue.js frontend) - https://evening-lake-45761.herokuapp.com/
 ## Synopsis
 
 Timberinvoice runs Python web service running on Django Rest Framework (DRF), Nginx and deployed on a Docker container registry on Heroku. It was built using a micro-service based architecture.
